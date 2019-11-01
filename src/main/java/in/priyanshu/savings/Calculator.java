@@ -52,68 +52,51 @@ public class Calculator {
     }
   }
 
+  //todo: fix
   private static void getExpectedIncrementRatioToReachFIRE() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.println("Enter current salary (monthly): ");
-    Double startingSalary = scanner.nextDouble();
-    System.out.println("Enter current monthly expenses (including personal, assume rest is saved) : ");
-    Double startingExpenses = scanner.nextDouble();
-    System.out.println("Enter Inflation rate (1% = 0.01): ");
-    Double inflationRate = scanner.nextDouble();
-    System.out.println("Enter InterestRate (1% = 0.01): ");
-    Double interestRate = scanner.nextDouble();
-    System.out.println("Enter number of years you want to achieve FIRE at: ");
-    Double durationInYears = scanner.nextDouble();
-
-    //finalSavings*interestRate = 12*currentExpenses*(inflationRate^years)
-    //finalSavings = 12*currentExpenses*(inflation^years)/interestRate
-    //finalSavings = 12*Sum{0, years}(startingSalary*(increment^i) - currentExpenses*(inflation^i))
-    // = 12*startingSalary*(increment^years - 1)/(increment - 1)
-    //todo: Binary Search on increment rate for finalSavings to be equal to this value!
-
-
-    Double finalSavings = 0D;
-    Double currentSalary = startingSalary;
-    Double currentExpenses = startingExpenses;
-    int numberOfYears = 0;
-    while(currentExpenses*12 > finalSavings*interestRate) {
-      double monthlySavings = (currentSalary - currentExpenses);
-      finalSavings += finalSavings*(1+interestRate);
-      finalSavings += monthlySavings*12;
-//      currentSalary = currentSalary * (1 + expectedIncrease);
-      currentExpenses = currentExpenses* (1 + inflationRate);
-      numberOfYears++;
-    }
-    System.out.println("The number of years required is : " + numberOfYears);
   }
 
   private static void getExpectedNumberOfYearsToReachFIRE() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.println("Enter current salary (monthly): ");
-    Double startingSalary = scanner.nextDouble();
-    System.out.println("Enter expected increase in income per year (40% = 0.4): ");
-    Double expectedIncrease = scanner.nextDouble();
-    System.out.println("Enter current monthly expenses (including personal, assume rest is saved) : ");
-    Double startingExpenses = scanner.nextDouble();
-    System.out.println("Enter Inflation rate (1% = 0.01): ");
-    Double inflationRate = scanner.nextDouble();
-    System.out.println("Enter InterestRate (1% = 0.01): ");
-    Double interestRate = scanner.nextDouble();
+    FinanceConfig financeConfig = FinanceConfig.scanFinanceConfig(
+        true,
+        true,
+        true,
+        true,
+        true,
+        false);
 
+    YearBinarySearch yearBinarySearch = YearBinarySearch.builder()
+        .financeConfig(financeConfig)
+        .build();
 
-    Double finalSavings = 0D;
-    Double currentSalary = startingSalary;
-    Double currentExpenses = startingExpenses;
-    int numberOfYears = 0;
-    while(currentExpenses*12 > finalSavings*interestRate) {
-      double monthlySavings = (currentSalary - currentExpenses);
-      finalSavings += finalSavings*(1+interestRate);
-      finalSavings += monthlySavings*12;
-      currentSalary = currentSalary * (1 + expectedIncrease);
-      currentExpenses = currentExpenses* (1 + inflationRate);
-      numberOfYears++;
-    }
-    System.out.println("The number of years required is : " + numberOfYears);
+    Double yearsRequired = yearBinarySearch.findValue(0D, 10000D);
+    System.out.println("Years Required is : " + yearsRequired);
+//    Scanner scanner = new Scanner(System.in);
+//    System.out.println("Enter current salary (monthly): ");
+//    Double startingSalary = scanner.nextDouble();
+//    System.out.println("Enter expected increase in income per year (40% = 0.4): ");
+//    Double expectedIncrease = scanner.nextDouble();
+//    System.out.println("Enter current monthly expenses (including personal, assume rest is saved) : ");
+//    Double startingExpenses = scanner.nextDouble();
+//    System.out.println("Enter Inflation rate (1% = 0.01): ");
+//    Double inflationRate = scanner.nextDouble();
+//    System.out.println("Enter InterestRate (1% = 0.01): ");
+//    Double interestRate = scanner.nextDouble();
+//
+//
+//    Double finalSavings = 0D;
+//    Double currentSalary = startingSalary;
+//    Double currentExpenses = startingExpenses;
+//    int numberOfYears = 0;
+//    while(currentExpenses*12 > finalSavings*interestRate) {
+//      double monthlySavings = (currentSalary - currentExpenses);
+//      finalSavings += finalSavings*(1+interestRate);
+//      finalSavings += monthlySavings*12;
+//      currentSalary = currentSalary * (1 + expectedIncrease);
+//      currentExpenses = currentExpenses* (1 + inflationRate);
+//      numberOfYears++;
+//    }
+//    System.out.println("The number of years required is : " + numberOfYears);
   }
 
   private static void getValueAccountingForAllScenarios() {
