@@ -1,5 +1,7 @@
 package in.priyanshu.savings;
 
+import in.priyanshu.savings.variableFinders.IncrementBinarySearch;
+import in.priyanshu.savings.variableFinders.YearBinarySearch;
 import java.util.Scanner;
 
 /*
@@ -27,37 +29,42 @@ public class Calculator {
   private static void interactiveSavingsCalculator() {
     Scanner scanner = new Scanner(System.in);
     printOptions();
-    int option = scanner.nextInt();
-    switch (option) {
-      case 1:
-        getFinalValueForLumpDeposit();
-        break;
-      case 2:
-        getValueForFixedAmountRecurringSavings();
-        break;
-      case 3:
-        getValueBasedOnPercentageOfIncomeSavedAccountingForIncreaseInIncome();
-        break;
-      case 4:
-        getValueAccountingForAllScenarios();
-        break;
-      case 5:
-        getExpectedNumberOfYearsToReachFIRE();
-        break;
-      case 6:
-        getExpectedIncrementRatioToReachFIRE();
-        break;
-      default:
-        System.out.println("Invalid option selected, exiting");
+    boolean repeatLoop = true;
+    while(repeatLoop) {
+      int option = scanner.nextInt();
+      switch (option) {
+        case 1:
+          getFinalValueForLumpDeposit();
+          break;
+        case 2:
+          getValueForFixedAmountRecurringSavings();
+          break;
+        case 3:
+          getValueBasedOnPercentageOfIncomeSavedAccountingForIncreaseInIncome();
+          break;
+        case 4:
+          getValueAccountingForAllScenarios();
+          break;
+        case 5:
+          processInputForExpectedNumberOfYearsToReachFIRE();
+          break;
+        case 6:
+          processInputForExpectedIncrementRatioToReachFIRE();
+          break;
+        case 7:
+          repeatLoop = false;
+          System.out.println("Exiting...");
+          break;
+        default:
+          System.out.println("Invalid option selected, exiting");
+      }
     }
   }
 
-  //todo: fix
-  private static void getExpectedIncrementRatioToReachFIRE() {
-  }
-
-  private static void getExpectedNumberOfYearsToReachFIRE() {
+  //todo: Move to input class
+  private static void processInputForExpectedNumberOfYearsToReachFIRE() {
     FinanceConfig financeConfig = FinanceConfig.scanFinanceConfig(
+        true,
         true,
         true,
         true,
@@ -65,38 +72,41 @@ public class Calculator {
         true,
         false);
 
+    Double yearsRequired = getNumberOfYearsToReachFIRE(financeConfig);
+    System.out.println("Years Required is : " + yearsRequired);
+  }
+
+  //todo: fix
+  private static void processInputForExpectedIncrementRatioToReachFIRE() {
+    FinanceConfig financeConfig = FinanceConfig.scanFinanceConfig(
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true);
+
+    Double yearsRequired = getIncrementRatioToReachFIRE(financeConfig);
+    System.out.println("Years Required is : " + yearsRequired);
+  }
+
+  static Double getIncrementRatioToReachFIRE(FinanceConfig financeConfig) {
+
+    IncrementBinarySearch incrementBinarySearch = IncrementBinarySearch.builder()
+        .financeConfig(financeConfig)
+        .build();
+
+    return incrementBinarySearch.findValue(0D, 5D);
+  }
+
+  static Double getNumberOfYearsToReachFIRE(FinanceConfig financeConfig) {
+
     YearBinarySearch yearBinarySearch = YearBinarySearch.builder()
         .financeConfig(financeConfig)
         .build();
 
-    Double yearsRequired = yearBinarySearch.findValue(0D, 10000D);
-    System.out.println("Years Required is : " + yearsRequired);
-//    Scanner scanner = new Scanner(System.in);
-//    System.out.println("Enter current salary (monthly): ");
-//    Double startingSalary = scanner.nextDouble();
-//    System.out.println("Enter expected increase in income per year (40% = 0.4): ");
-//    Double expectedIncrease = scanner.nextDouble();
-//    System.out.println("Enter current monthly expenses (including personal, assume rest is saved) : ");
-//    Double startingExpenses = scanner.nextDouble();
-//    System.out.println("Enter Inflation rate (1% = 0.01): ");
-//    Double inflationRate = scanner.nextDouble();
-//    System.out.println("Enter InterestRate (1% = 0.01): ");
-//    Double interestRate = scanner.nextDouble();
-//
-//
-//    Double finalSavings = 0D;
-//    Double currentSalary = startingSalary;
-//    Double currentExpenses = startingExpenses;
-//    int numberOfYears = 0;
-//    while(currentExpenses*12 > finalSavings*interestRate) {
-//      double monthlySavings = (currentSalary - currentExpenses);
-//      finalSavings += finalSavings*(1+interestRate);
-//      finalSavings += monthlySavings*12;
-//      currentSalary = currentSalary * (1 + expectedIncrease);
-//      currentExpenses = currentExpenses* (1 + inflationRate);
-//      numberOfYears++;
-//    }
-//    System.out.println("The number of years required is : " + numberOfYears);
+    return yearBinarySearch.findValue(0D, 100D);
   }
 
   private static void getValueAccountingForAllScenarios() {
@@ -137,6 +147,7 @@ public class Calculator {
     System.out.println("4. Get Value accounting for expenditure, inflation, savings and increase in income");
     System.out.println("5. Get Expected number of years to reach FIRE");
     System.out.println("6. Get Expected salary increment to reach FIRE");
+    System.out.println("7. Quit");
   }
 
   private static void getValueBasedOnPercentageOfIncomeSavedAccountingForIncreaseInIncome() {

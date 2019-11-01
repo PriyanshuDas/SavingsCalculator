@@ -2,9 +2,11 @@ package in.priyanshu.binarySearch;
 
 import java.util.List;
 
+//todo: Make delta configurable
+
 public abstract class BinarySearch {
 
-  private static final double DELTA = 0.001;
+  private static final double VALUE_DELTA = 0.001;
 
   public enum SearchRange {
     LEFT,
@@ -18,26 +20,26 @@ public abstract class BinarySearch {
   public Double findValue(Double minValue, Double maxValue) {
     Double left = minValue;
     Double right = maxValue;
-    while (right - left > DELTA) {
+    while (right - left > VALUE_DELTA) {
       Double middle = (left + right) / 2;
       SearchRange newRange = getNewSearchRange(middle);
       switch (newRange) {
         case LEFT:
-          right = middle - DELTA;
+          right = middle - VALUE_DELTA;
           break;
         case RIGHT:
-          left = middle + DELTA;
+          left = middle + VALUE_DELTA;
           break;
         case MIDDLE:
           left = middle;
           right = middle;
           break;
         case NONE:
-          left = middle + DELTA;
-          right = middle - DELTA;
+          left = middle + VALUE_DELTA;
+          right = middle - VALUE_DELTA;
           break;
       }
     }
-    return right - left < DELTA ? right : -1D;
+    return right - left <= 1 ? right : -1D;
   }
 }
