@@ -115,11 +115,11 @@ public class FinanceConfig {
     return totalExpensesInYear - interestOnFinalSavings;
   }
 
-  private Double getSavingsInFinalYear() {
+  Double getSavingsInFinalYear() {
     return getSavingsAtYear(this.getYearsLeft());
   }
 
-  private Double getExpensesInFinalYear() {
+  Double getExpensesInFinalYear() {
     return getExpensesInYear(this.getYearsLeft());
   }
 }
