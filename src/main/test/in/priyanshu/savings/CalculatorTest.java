@@ -1,5 +1,6 @@
 package in.priyanshu.savings;
 
+import in.priyanshu.savings.financeConfig.FinanceConfig;
 import org.junit.jupiter.api.Test;
 
 class CalculatorTest {

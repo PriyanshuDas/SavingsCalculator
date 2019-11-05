@@ -1,7 +1,7 @@
 package in.priyanshu.savings.variableFinders;
 
 import in.priyanshu.binarySearch.BinarySearch;
-import in.priyanshu.savings.FinanceConfig;
+import in.priyanshu.savings.financeConfig.FinanceConfig;
 import lombok.Builder;
 import lombok.Setter;
 

@@ -1,4 +1,4 @@
-package in.priyanshu.savings;
+package in.priyanshu.savings.utils;
 
 import java.util.Scanner;
 
@@ -13,7 +13,8 @@ public class FinanceHelper {
     return currentValue;
   }
 
-  static void getFinalValueForLumpDeposit() {
+  //todo: make it a request-esque object
+  public static void getFinalValueForLumpDeposit() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("Enter Starting amount : ");
     Double amount = scanner.nextDouble();
@@ -25,7 +26,7 @@ public class FinanceHelper {
     System.out.println("The final value saved is : " + finalValue);
   }
 
-  static void getValueForFixedAmountRecurringSavings() {
+  public static void getValueForFixedAmountRecurringSavings() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("Enter amount saved per month: ");
     Double monthlySavings = scanner.nextDouble();
