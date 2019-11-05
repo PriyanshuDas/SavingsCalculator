@@ -87,4 +87,21 @@ class CalculatorTest {
     System.out.println("Increment Ratio Required : " + incrementRatio);
     assert incrementRatio > 1.6 && incrementRatio < 1.7;
   }
+
+  @Test
+  void getIncrementRequiredToReachFIRE_scenario_3() {
+    FinanceConfig testFinanceConfig = FinanceConfig.builder()
+            .startingSalaryPerMonth(133000D)
+            .startingExpensesPerMonth(60000D)
+            .startingSavings(0D)
+            .incrementRatePerYear(null)
+            .inflationRatePerYear(1.04D)
+            .interestRatePerYear(0.065D)
+            .yearsLeft(5D)
+            .build();
+    Double incrementRatio = Calculator.getIncrementRatioToReachFIRE(testFinanceConfig);
+    testFinanceConfig.printConfig();
+    System.out.println("Increment Ratio Required : " + incrementRatio);
+    assert incrementRatio > 1.38 && incrementRatio < 1.39;
+  }
 }
