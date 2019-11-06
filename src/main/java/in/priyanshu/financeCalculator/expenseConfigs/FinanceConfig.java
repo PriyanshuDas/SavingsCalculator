@@ -1,4 +1,4 @@
-package in.priyanshu.savings.financeConfig;
+package in.priyanshu.financeCalculator.expenseConfigs;
 
 import java.util.Scanner;
 
@@ -108,7 +108,7 @@ public class FinanceConfig {
   }
 
   //getters
-
+  //todo: incorporate the different expenseConfigs accounting into this
   private Double getSavingsAtYear(Double year) {
     Double totalSavings = this.startingSavings;
 
@@ -127,6 +127,7 @@ public class FinanceConfig {
     return totalSavings;
   }
 
+  //todo: incorporate the different expenseConfigs accounting into this
   private Double getExpensesInYear(Double year) {
     return 12*this.getStartingExpensesPerMonth()*Math.pow(this.getInflationRatePerYear(), year);
   }

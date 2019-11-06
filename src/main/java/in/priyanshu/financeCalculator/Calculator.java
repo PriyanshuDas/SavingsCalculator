@@ -1,16 +1,14 @@
-package in.priyanshu.savings;
+package in.priyanshu.financeCalculator;
 
-import in.priyanshu.savings.financeConfig.FinanceConfig;
-import in.priyanshu.savings.utils.FinanceHelper;
-import in.priyanshu.savings.variableFinders.IncrementBinarySearch;
-import in.priyanshu.savings.variableFinders.YearBinarySearch;
+import in.priyanshu.financeCalculator.expenseConfigs.FinanceConfig;
+import in.priyanshu.financeCalculator.savings.RecurringSavings;
+import in.priyanshu.financeCalculator.savings.Savings;
+import in.priyanshu.financeCalculator.variableFinders.IncrementBinarySearch;
+import in.priyanshu.financeCalculator.variableFinders.YearBinarySearch;
 import java.util.Scanner;
 
 /*
   Todo:
-    - Add a parameter for expected expense bumps (marriage, kids, etc.)
-    - Add a parameter for defining an extra "emergency fund"
-    - Make the code more "modular"
  */
 
 public class Calculator {
@@ -37,10 +35,10 @@ public class Calculator {
       int option = scanner.nextInt();
       switch (option) {
         case 1:
-          FinanceHelper.getFinalValueForLumpDeposit();
+          getFinalValueForLumpDeposit();
           break;
         case 2:
-          FinanceHelper.getValueForFixedAmountRecurringSavings();
+          getValueForFixedAmountRecurringSavings();
           break;
         case 3:
           getValueAccountingForAllScenarios();
@@ -119,4 +117,14 @@ public class Calculator {
     System.out.println("The final value saved is : " + finalSavings);
   }
 
+  //todo: make it a request-esque object
+  public static void getFinalValueForLumpDeposit() {
+    Savings savings = Savings.scanFromInput();
+    System.out.println("The final value saved is : " + savings.getFinalAmount());
+  }
+
+  public static void getValueForFixedAmountRecurringSavings() {
+    RecurringSavings recurringSavings = RecurringSavings.scanFromInput();
+    System.out.println("The final value saved is : " + recurringSavings.getFinalAmount());
+  }
 }

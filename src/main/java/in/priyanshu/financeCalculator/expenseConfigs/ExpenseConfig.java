@@ -1,4 +1,4 @@
-package in.priyanshu.savings.financeConfig;
+package in.priyanshu.financeCalculator.expenseConfigs;
 
 import lombok.Builder;
 import lombok.Getter;
